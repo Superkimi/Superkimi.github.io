@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-跨域和解决跨域的方法 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="js跨域1.同源策略同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。 同源策略限制内容有：Cookie、LocalStorage、IndexedDB 等存储性内容DOM 节点AJAX 请求发送后，结果被浏览器拦截了 跨域并不是请求发不出去，请">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-跨域和解决跨域的方法">
+<meta property="og:url" content="/2019/07/26/js_cors/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="js跨域1.同源策略同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。 同源策略限制内容有：Cookie、LocalStorage、IndexedDB 等存储性内容DOM 节点AJAX 请求发送后，结果被浏览器拦截了 跨域并不是请求发不出去，请">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-26T05:00:30.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-跨域和解决跨域的方法">
+<meta name="twitter:description" content="js跨域1.同源策略同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。 同源策略限制内容有：Cookie、LocalStorage、IndexedDB 等存储性内容DOM 节点AJAX 请求发送后，结果被浏览器拦截了 跨域并不是请求发不出去，请">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#js跨域"><span class="toc-text">js跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-同源策略"><span class="toc-text">1.同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-常见跨域场景"><span class="toc-text">2.常见跨域场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-实现跨域的九种方式"><span class="toc-text">3. 实现跨域的九种方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-gt-jsonp"><span class="toc-text">1&gt; jsonp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-gt-cors"><span class="toc-text">2&gt; cors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-gt-postMessage"><span class="toc-text">3&gt; postMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-gt-http-proxy"><span class="toc-text">4&gt; http-proxy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-gt-nginx"><span class="toc-text">5&gt; nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-gt-websocket"><span class="toc-text">6&gt; websocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-gt-document-domain"><span class="toc-text">7&gt; document.domain</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-gt-window-name"><span class="toc-text">8&gt; window.name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-gt-location-hash"><span class="toc-text">9&gt; location.hash</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_cors" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-跨域和解决跨域的方法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.07.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="js跨域"><a href="#js跨域" class="headerlink" title="js跨域"></a>js跨域</h1><h2 id="1-同源策略"><a href="#1-同源策略" class="headerlink" title="1.同源策略"></a>1.同源策略</h2><p>同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。</p>
+<p>同源策略限制内容有：<br>Cookie、LocalStorage、IndexedDB 等存储性内容<br>DOM 节点<br>AJAX 请求发送后，结果被浏览器拦截了</p>
+<p><strong>跨域并不是请求发不出去，请求能发出去，服务端能收到请求并正常返回结果，只是结果被浏览器拦截了</strong>。你可能会疑问明明通过表单的方式可以发起跨域请求，为什么 Ajax 就不会?因为归根结底，跨域是为了阻止用户读取到另一个域名下的内容，Ajax 可以获取响应，浏览器认为这不安全，所以拦截了响应。但是表单并不会获取新的内容，所以可以发起跨域请求。同时也说明了跨域并不能完全阻止 CSRF，因为请求毕竟是发出去了。</p>
+<h2 id="2-常见跨域场景"><a href="#2-常见跨域场景" class="headerlink" title="2.常见跨域场景"></a>2.常见跨域场景</h2><p><strong>当协议、子域名、主域名、端口号中任意一个不相同时，都算作不同域</strong>。不同域之间相互请求资源，就算作“跨域”。常见跨域场景如下图所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<h2 id="3-实现跨域的九种方式"><a href="#3-实现跨域的九种方式" class="headerlink" title="3. 实现跨域的九种方式"></a>3. 实现跨域的九种方式</h2><h3 id="1-gt-jsonp"><a href="#1-gt-jsonp" class="headerlink" title="1&gt; jsonp"></a>1&gt; jsonp</h3><p>有几个标签是允许跨域加载资源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=XXX&gt;</span><br><span class="line">&lt;link href=XXX&gt;</span><br><span class="line">&lt;script src=XXX&gt;</span><br><span class="line">&lt;frame&gt;等dom标签，还有样式中background:url()、@font-face()等文件外链</span><br></pre></td></tr></table></figure>
+
+<p><strong>JSONP优点是简单兼容性好，可用于解决主流浏览器的跨域数据访问的问题。缺点是仅支持get方法具有局限性,不安全可能会遭受XSS攻击（jsonp请求返回<script></script>）。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">   function kimi(data) &#123;</span><br><span class="line">     console.log(data)</span><br><span class="line">   &#125;</span><br><span class="line"> &lt;/script&gt;</span><br><span class="line"> &lt;script src=&quot;https://www.baidu.com/sugrec?prod=pc&amp;wd=8&amp;cb=kimi&quot;&gt;</span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-gt-cors"><a href="#2-gt-cors" class="headerlink" title="2&gt; cors"></a>2&gt; cors</h3><p>浏览器会自动进行 CORS 通信，实现 CORS 通信的关键是后端。只要后端实现了 CORS，就实现了跨域。</p>
+<p>服务端设置了Access-Control-Allow-Origin就开启了CORS通信，表示允许哪个域来访问我。<br>具体需要设置的头部有很多，列举常用的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 设置哪个源可以访问我</span><br><span class="line">res.setHeader(&apos;Access-Control-Allow-Origin&apos;, origin)</span><br><span class="line">// 允许携带哪个头访问我</span><br><span class="line">res.setHeader(&apos;Access-Control-Allow-Headers&apos;, &apos;name&apos;)</span><br><span class="line">// 允许哪个方法访问我</span><br><span class="line">res.setHeader(&apos;Access-Control-Allow-Methods&apos;, &apos;PUT&apos;)</span><br><span class="line">// 允许携带cookie</span><br><span class="line">res.setHeader(&apos;Access-Control-Allow-Credentials&apos;, true)</span><br><span class="line">// 预检的存活时间</span><br><span class="line">res.setHeader(&apos;Access-Control-Max-Age&apos;, 6)</span><br><span class="line">// 允许返回的头</span><br><span class="line">res.setHeader(&apos;Access-Control-Expose-Headers&apos;, &apos;name&apos;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-gt-postMessage"><a href="#3-gt-postMessage" class="headerlink" title="3&gt; postMessage"></a>3&gt; postMessage</h3><p>postMessage是HTML5 XMLHttpRequest Level 2中的API，且是为数不多可以跨域操作的window属性之一，它可用于解决以下方面的问题：</p>
+<ul>
+<li>页面和其打开的新窗口的数据传递</li>
+<li>多窗口之间消息传递</li>
+<li>页面与嵌套的iframe消息传递</li>
+<li>上面三个场景的跨域数据传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">  &lt;iframe src=&quot;http://localhost:4000/b.html&quot; frameborder=&quot;0&quot; id=&quot;frame&quot; onload=&quot;load()&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;script&gt;</span><br><span class="line">      function load() &#123;</span><br><span class="line">        let frame = document.getElementById(&apos;frame&apos;)</span><br><span class="line">        frame.contentWindow.postMessage(&apos;kimi&apos;, &apos;http://localhost:4000&apos;) //发送数据</span><br><span class="line">        window.onmessage = function(e) &#123; //接受返回数据</span><br><span class="line">          console.log(e.data) //yes</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// b.html</span><br><span class="line">  window.onmessage = function(e) &#123;</span><br><span class="line">    console.log(e.data) //kimi</span><br><span class="line">    e.source.postMessage(&apos;yes, e.origin)</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-gt-http-proxy"><a href="#4-gt-http-proxy" class="headerlink" title="4&gt; http-proxy"></a>4&gt; http-proxy</h3><p>  一般在使用webpack时webpack-dev-server会加proxy-table来转发请求。因为同源策略是浏览器需要遵循的标准，而如果是服务器向服务器请求就无需遵循同源策略</p>
+<h3 id="5-gt-nginx"><a href="#5-gt-nginx" class="headerlink" title="5&gt; nginx"></a>5&gt; nginx</h3><p>实现原理类似于Node中间件代理，需要你搭建一个中转nginx服务器，用于转发请求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//  nginx proxy服务器</span><br><span class="line">server &#123;</span><br><span class="line">    listen       81;</span><br><span class="line">    server_name  www.domain1.com;</span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass   http://www.domain2.com:8080;  #反向代理</span><br><span class="line">        proxy_cookie_domain www.domain2.com www.domain1.com; #修改cookie里域名</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-gt-websocket"><a href="#6-gt-websocket" class="headerlink" title="6&gt; websocket"></a>6&gt; websocket</h3><p>websocket 是没有跨域限制的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// socket.html</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    let socket = new WebSocket(&apos;ws://localhost:3000&apos;);</span><br><span class="line">    socket.onopen = function () &#123;</span><br><span class="line">      socket.send(&apos;kimi1&apos;);//向服务器发送数据</span><br><span class="line">    &#125;</span><br><span class="line">    socket.onmessage = function (e) &#123;</span><br><span class="line">      console.log(e.data);//接收服务器返回的数据</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// server.js</span><br><span class="line">let express = require(&apos;express&apos;);</span><br><span class="line">let app = express();</span><br><span class="line">let WebSocket = require(&apos;ws&apos;);</span><br><span class="line">let wss = new WebSocket.Server(&#123;port:3000&#125;);</span><br><span class="line">wss.on(&apos;connection&apos;,function(ws) &#123;</span><br><span class="line">  ws.on(&apos;message&apos;, function (data) &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">    ws.send(&apos;kimi2&apos;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-gt-document-domain"><a href="#7-gt-document-domain" class="headerlink" title="7&gt; document.domain"></a>7&gt; document.domain</h3><p>该方式只能用于二级域名相同的情况下，比如 video.baidu.com 和 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 适用于该方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> helloa</span><br><span class="line">  &lt;iframe src=&quot;http://video.baidu.com&quot; frameborder=&quot;0&quot; onload=&quot;load()&quot; id=&quot;frame&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    document.domain = &apos;baidu.cn&apos;</span><br><span class="line">    function load() &#123;</span><br><span class="line">      console.log(frame.contentWindow.a);</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// b.html</span><br><span class="line">&lt;body&gt;</span><br><span class="line">   hellob</span><br><span class="line">   &lt;script&gt;</span><br><span class="line">     document.domain = &apos;baidu.cn&apos;</span><br><span class="line">     var a = 100;</span><br><span class="line">   &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-gt-window-name"><a href="#8-gt-window-name" class="headerlink" title="8&gt; window.name"></a>8&gt; window.name</h3><p>window.name属性的独特之处：name值在不同的页面（甚至不同域名）加载后依旧存在，并且可以支持非常长的 name 值（2MB）。</p>
+<blockquote>
+<p>实现：先在a页面中嵌入c页面，在c页面中写入window.name值, c加载完毕后马上切换成a同源的b页面。等b加载完后可以拿到没有清除的name值</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// a.html(http://localhost:3000/b.html)</span><br><span class="line">  &lt;iframe src=&quot;http://localhost:4000/c.html&quot; frameborder=&quot;0&quot; onload=&quot;load()&quot; id=&quot;iframe&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    let first = true</span><br><span class="line">    // onload事件会触发2次，第1次加载跨域页，并留存数据于window.name</span><br><span class="line">    function load() &#123;</span><br><span class="line">      if(first)&#123;</span><br><span class="line">      // 第1次onload(跨域页)成功后，切换到同域代理页面</span><br><span class="line">        let iframe = document.getElementById(&apos;iframe&apos;);</span><br><span class="line">        iframe.src = &apos;http://localhost:3000/b.html&apos;;</span><br><span class="line">        first = false;</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">      // 第2次onload(同域b.html页)成功后，读取同域window.name中数据</span><br><span class="line">        console.log(iframe.contentWindow.name);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// c.html(http://localhost:4000/c.html)</span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   window.name = &apos;yes&apos;  </span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-gt-location-hash"><a href="#9-gt-location-hash" class="headerlink" title="9&gt; location.hash"></a>9&gt; location.hash</h3><blockquote>
+<p>a页面嵌入c页面带给他hash数据，c页面中拿到后，再嵌入和a同源的b页面带入hash数据，b拿到后再设置回a页面的hash中。a中再监听hash变化来获取。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// a.html</span><br><span class="line">  &lt;iframe src=&quot;http://localhost:4000/c.html#kimi&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    window.onhashchange = function () &#123; //检测hash的变化</span><br><span class="line">      console.log(location.hash);</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// b.html</span><br><span class="line"> &lt;script&gt;</span><br><span class="line">   window.parent.parent.location.hash = location.hash </span><br><span class="line">   //b.html将结果放到a.html的hash值中，b.html可通过parent.parent访问a.html页面</span><br><span class="line"> &lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// c.html</span><br><span class="line">console.log(location.hash);</span><br><span class="line"> let iframe = document.createElement(&apos;iframe&apos;);</span><br><span class="line"> iframe.src = &apos;http://localhost:3000/b.html#yes&apos;;</span><br><span class="line"> document.body.appendChild(iframe);</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>现在业界主流使用解决跨域问题的方案主要是 nginx和cors、jsonp（优势在于可以兼容老版本浏览器，但是只支持get并且不安全），本地开发常用node-proxy的方式做反向代理。其他的方式都不常用。location.hash和window.name都需要有第三方中介。而domain的方式会有域名的限制条件。</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/07/21/js_type_tranform/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
