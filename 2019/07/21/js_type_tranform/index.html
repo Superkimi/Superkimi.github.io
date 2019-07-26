@@ -25,7 +25,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-e112212e0d44d28d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-c606c7d4e1a314cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-25T15:03:10.238Z">
+<meta property="og:updated_time" content="2019-07-26T05:04:44.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript基础-类型转换">
 <meta name="twitter:description" content="js类型转换1 用于类型转换的valueOf和toString valueOf()的意义是，返回这个对象逻辑上对应的原始类型的值。比如说，String包装对象的valueOf()，应该返回这个对象所包装的字符串。 toString()的意义是，返回这个对象的字符串表示。用一个字符串来描述这个对象的内容。  基本类型的valueOf会返回自身的原始类型，而Array、Function、Object都">
@@ -222,11 +222,11 @@
   <div class="article-content">
     
       <h1 id="js类型转换"><a href="#js类型转换" class="headerlink" title="js类型转换"></a>js类型转换</h1><h2 id="1-用于类型转换的valueOf和toString"><a href="#1-用于类型转换的valueOf和toString" class="headerlink" title="1 用于类型转换的valueOf和toString"></a>1 用于类型转换的valueOf和toString</h2><ul>
-<li><a href="https://link.jianshu.com/?t=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf" target="_blank" rel="noopener">valueOf()</a>的意义是，返回这个对象<strong>逻辑上对应的</strong>原始类型的值。比如说，String包装对象的valueOf()，应该返回这个对象所包装的字符串。</li>
-<li><a href="https://link.jianshu.com/?t=https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="noopener">toString()</a>的意义是，返回这个对象的字符串表示。<strong>用一个字符串来描述这个对象的内容。</strong></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf" target="_blank" rel="noopener">valueOf()</a>的意义是，返回这个对象<strong>逻辑上对应的</strong>原始类型的值。比如说，String包装对象的valueOf()，应该返回这个对象所包装的字符串。</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" target="_blank" rel="noopener">toString()</a>的意义是，返回这个对象的字符串表示。<strong>用一个字符串来描述这个对象的内容。</strong></li>
 </ul>
 <p><strong>基本类型的valueOf会返回自身的原始类型，而Array、Function、Object都返回自身，Date返回时间戳，Error和Math没有valueOf方法</strong></p>
-<h2 id="2-用于检测类型的四个js内部方法"><a href="#2-用于检测类型的四个js内部方法" class="headerlink" title="2 用于检测类型的四个js内部方法"></a>2 用于检测类型的四个js内部方法</h2><p>这4个方法实际上是<a href="https://link.jianshu.com?t=https://tc39.github.io/ecma262/#sec-type-conversion" target="_blank" rel="noopener">ECMAScript定义的4个抽象的操作</a>，它们在js内部使用，进行类型转换。我们js的使用者不能直接调用这些函数，但是了解这些函数有利于我们理解js类型转换的原理。</p>
+<h2 id="2-用于检测类型的四个js内部方法"><a href="#2-用于检测类型的四个js内部方法" class="headerlink" title="2 用于检测类型的四个js内部方法"></a>2 用于检测类型的四个js内部方法</h2><p>这4个方法实际上是<a href="https://tc39.github.io/ecma262/#sec-type-conversion" target="_blank" rel="noopener">ECMAScript定义的4个抽象的操作</a>，它们在js内部使用，进行类型转换。我们js的使用者不能直接调用这些函数，但是了解这些函数有利于我们理解js类型转换的原理。</p>
 <ul>
 <li>ToPrimitive ( input [ , PreferredType ] )</li>
 <li>ToBoolean ( argument )</li>
@@ -294,7 +294,7 @@
 <td>Return true</td>
 </tr>
 </tbody></table>
-<p>这些规定都来自<a href="https://link.jianshu.com?t=https://tc39.github.io/ecma262/#sec-toboolean" target="_blank" rel="noopener">ECMA的标准</a>，在条件判断时，除了 undefined， null， false， NaN， ‘’， 0， -0，其他所有值都转为 true，包括所有对象。</p>
+<p>这些规定都来自<a href="https://tc39.github.io/ecma262/#sec-toboolean" target="_blank" rel="noopener">ECMA的标准</a>，在条件判断时，除了 undefined， null， false， NaN， ‘’， 0， -0，其他所有值都转为 true，包括所有对象。</p>
 <h3 id="ToNumber-argument"><a href="#ToNumber-argument" class="headerlink" title="ToNumber ( argument )"></a>ToNumber ( argument )</h3><table>
 <thead>
 <tr>
@@ -388,7 +388,7 @@
 <h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><p>符号’+’是一个比较棘手的一个符号，因为它既可以表示“算数加法”，也可以表示“字符串拼接”。<br>简单理解版本：只要’+’两端的任意一个操作数是字符串，那么这个’+’就表示字符串拼接，否则表示算数加法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">12+3</span><br><span class="line">// 15</span><br><span class="line">12+&apos;3&apos;</span><br><span class="line">// &quot;123&quot;</span><br></pre></td></tr></table></figure>
 
-<p>原理理解版本：根据<a href="https://link.jianshu.com?t=https://tc39.github.io/ecma262/#sec-addition-operator-plus" target="_blank" rel="noopener">ECMAScript的定义</a>，对’+’运算的求值按照以下过程：</p>
+<p>原理理解版本：根据<a href="https://tc39.github.io/ecma262/#sec-addition-operator-plus" target="_blank" rel="noopener">ECMAScript的定义</a>，对’+’运算的求值按照以下过程：</p>
 <ol>
 <li>令lval = 符号左边的值，rval = 符号右边的值</li>
 <li>令lprim = ToPrimitive(lval)，rprim = ToPrimitive(rval)</li>
