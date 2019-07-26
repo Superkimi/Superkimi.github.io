@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="SuperKimi">
 <meta property="og:description" content="js类型转换1 用于类型转换的valueOf和toString valueOf()的意义是，返回这个对象逻辑上对应的原始类型的值。比如说，String包装对象的valueOf()，应该返回这个对象所包装的字符串。 toString()的意义是，返回这个对象的字符串表示。用一个字符串来描述这个对象的内容。  基本类型的valueOf会返回自身的原始类型，而Array、Function、Object都">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-e112212e0d44d28d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-c606c7d4e1a314cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-26T05:04:44.165Z">
+<meta property="og:image" content="/images/to.jpg">
+<meta property="og:image" content="/images/tra.png">
+<meta property="og:updated_time" content="2019-07-26T05:11:41.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript基础-类型转换">
 <meta name="twitter:description" content="js类型转换1 用于类型转换的valueOf和toString valueOf()的意义是，返回这个对象逻辑上对应的原始类型的值。比如说，String包装对象的valueOf()，应该返回这个对象所包装的字符串。 toString()的意义是，返回这个对象的字符串表示。用一个字符串来描述这个对象的内容。  基本类型的valueOf会返回自身的原始类型，而Array、Function、Object都">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3875785-e112212e0d44d28d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="/images/to.jpg">
 
   
 
@@ -256,7 +256,7 @@
 <p>Date 转换的时候PreferredType 视为String先调用toString。所以console.log(111 + new Date())  // “111Thu Jul 25 2019 22:34:51 GMT+0800 (中国标准时间)”</p>
 </blockquote>
 <blockquote>
-<p><strong>可以看出，ToPrimitive依赖于valueOf和toString的实现。</strong><br><img src="https://upload-images.jianshu.io/upload_images/3875785-e112212e0d44d28d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="toPrimitive.jpg"></p>
+<p><strong>可以看出，ToPrimitive依赖于valueOf和toString的实现。</strong><br><img src="/images/to.jpg" alt="toPrimitive.jpg"></p>
 </blockquote>
 <h3 id="ToBoolean-argument"><a href="#ToBoolean-argument" class="headerlink" title="ToBoolean ( argument )"></a>ToBoolean ( argument )</h3><table>
 <thead>
@@ -371,7 +371,7 @@
 <td>先primValue = ToPrimitive(argument, hint String)，再对primValue使用ToString(primValue)</td>
 </tr>
 </tbody></table>
-<p><img src="https://upload-images.jianshu.io/upload_images/3875785-c606c7d4e1a314cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p><img src="/images/tra.png" alt="2.png"></p>
 <h2 id="3-隐式类型转换（自动类型转换）"><a href="#3-隐式类型转换（自动类型转换）" class="headerlink" title="3 隐式类型转换（自动类型转换）"></a>3 隐式类型转换（自动类型转换）</h2><p>当js期望得到某种类型的值，而实际在那里的值是其他的类型，就会发生隐式类型转换。系统内部会自动调用我们前面说ToBoolean ( argument )、ToNumber ( argument )、ToString ( argument )，尝试转换成期望的数据类型。</p>
 <p>例子1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if ( !undefined</span><br><span class="line">  &amp;&amp; !null</span><br><span class="line">  &amp;&amp; !0</span><br><span class="line">  &amp;&amp; !NaN</span><br><span class="line">  &amp;&amp; !&apos;&apos;</span><br><span class="line">) &#123;</span><br><span class="line">  console.log(&apos;true&apos;);</span><br><span class="line">&#125; // true</span><br></pre></td></tr></table></figure>

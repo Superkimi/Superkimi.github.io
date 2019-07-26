@@ -23,12 +23,12 @@
 <meta property="og:site_name" content="SuperKimi">
 <meta property="og:description" content="js跨域1.同源策略同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。 同源策略限制内容有：Cookie、LocalStorage、IndexedDB 等存储性内容DOM 节点AJAX 请求发送后，结果被浏览器拦截了 跨域并不是请求发不出去，请">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-07-26T05:00:30.711Z">
+<meta property="og:image" content="/images/cors.png">
+<meta property="og:updated_time" content="2019-07-26T05:12:17.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript基础-跨域和解决跨域的方法">
 <meta name="twitter:description" content="js跨域1.同源策略同源策略是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。 同源策略限制内容有：Cookie、LocalStorage、IndexedDB 等存储性内容DOM 节点AJAX 请求发送后，结果被浏览器拦截了 跨域并不是请求发不出去，请">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:image" content="/images/cors.png">
 
   
 
@@ -224,7 +224,7 @@
 <p>同源策略限制内容有：<br>Cookie、LocalStorage、IndexedDB 等存储性内容<br>DOM 节点<br>AJAX 请求发送后，结果被浏览器拦截了</p>
 <p><strong>跨域并不是请求发不出去，请求能发出去，服务端能收到请求并正常返回结果，只是结果被浏览器拦截了</strong>。你可能会疑问明明通过表单的方式可以发起跨域请求，为什么 Ajax 就不会?因为归根结底，跨域是为了阻止用户读取到另一个域名下的内容，Ajax 可以获取响应，浏览器认为这不安全，所以拦截了响应。但是表单并不会获取新的内容，所以可以发起跨域请求。同时也说明了跨域并不能完全阻止 CSRF，因为请求毕竟是发出去了。</p>
 <h2 id="2-常见跨域场景"><a href="#2-常见跨域场景" class="headerlink" title="2.常见跨域场景"></a>2.常见跨域场景</h2><p><strong>当协议、子域名、主域名、端口号中任意一个不相同时，都算作不同域</strong>。不同域之间相互请求资源，就算作“跨域”。常见跨域场景如下图所示：</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3875785-94b92fbb1b609b4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="/images/cors.png" alt="cors.png"></p>
 <h2 id="3-实现跨域的九种方式"><a href="#3-实现跨域的九种方式" class="headerlink" title="3. 实现跨域的九种方式"></a>3. 实现跨域的九种方式</h2><h3 id="1-gt-jsonp"><a href="#1-gt-jsonp" class="headerlink" title="1&gt; jsonp"></a>1&gt; jsonp</h3><p>有几个标签是允许跨域加载资源：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=XXX&gt;</span><br><span class="line">&lt;link href=XXX&gt;</span><br><span class="line">&lt;script src=XXX&gt;</span><br><span class="line">&lt;frame&gt;等dom标签，还有样式中background:url()、@font-face()等文件外链</span><br></pre></td></tr></table></figure>
 
