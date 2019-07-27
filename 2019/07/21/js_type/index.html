@@ -15,18 +15,18 @@
     <meta name="keywords" content="javascript,">
   
 
-  <meta name="description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。 1 typeof123456789101112typeof false // booleantypeof null // objecttypeof undefined // un">
+  <meta name="description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。  注意点：  undefined和not defined是不同的 。undefined代表的是定义了但是没有赋值，not defined表示没有定义。但是typeof 都返回un">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript基础-数据类型">
 <meta property="og:url" content="/2019/07/21/js_type/index.html">
 <meta property="og:site_name" content="SuperKimi">
-<meta property="og:description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。 1 typeof123456789101112typeof false // booleantypeof null // objecttypeof undefined // un">
+<meta property="og:description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。  注意点：  undefined和not defined是不同的 。undefined代表的是定义了但是没有赋值，not defined表示没有定义。但是typeof 都返回un">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-25T14:56:58.714Z">
+<meta property="og:updated_time" content="2019-07-27T09:46:08.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript基础-数据类型">
-<meta name="twitter:description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。 1 typeof123456789101112typeof false // booleantypeof null // objecttypeof undefined // un">
+<meta name="twitter:description" content="js 数据类型  js中有六种原始类型：  number boolean null undefined string symbol一种引用类型 object  引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。  注意点：  undefined和not defined是不同的 。undefined代表的是定义了但是没有赋值，not defined表示没有定义。但是typeof 都返回un">
 
   
 
@@ -229,6 +229,15 @@
 <li>object</li>
 </ul>
 <p>引用类型和基本类型有什么区别，以及深浅拷贝之类就暂时不表了。</p>
+<blockquote>
+<p><code>注意点：</code></p>
+<ol>
+<li>undefined和not defined是不同的 。undefined代表的是定义了但是没有赋值，not defined表示没有定义。但是typeof 都返回undefined。</li>
+<li>js中的string是不可变的，他的成员函数不会改变原值，而是创建并返回一个新的字符串。</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = a.toUpperCase();</span><br><span class="line">a === c // false</span><br></pre></td></tr></table></figure>
+
 <h2 id="1-typeof"><a href="#1-typeof" class="headerlink" title="1 typeof"></a>1 typeof</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">typeof false // boolean</span><br><span class="line">typeof null // object</span><br><span class="line">typeof undefined // undefined</span><br><span class="line">typeof 2 // number</span><br><span class="line">typeof NaN // number</span><br><span class="line">typeof Infinity // number</span><br><span class="line">typeof &apos;kimi&apos; // string</span><br><span class="line">typeof Symbol(&apos;kimi&apos;) // symbol</span><br><span class="line"></span><br><span class="line">typeof Date // funtion</span><br><span class="line">typeof [2,2,3] // object</span><br><span class="line">typeof &#123;a:1&#125; // object</span><br></pre></td></tr></table></figure>
 
 <blockquote>
