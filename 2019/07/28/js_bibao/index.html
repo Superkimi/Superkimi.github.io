@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-作用域&amp;闭包 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="js作用域&amp;amp;闭包作用域 作用域是负责收集并维护由所有声明的变量组成的一系列查询，并且实施一套严格的规则，确定当前执行的代码对这些变量的访问权限 – 《你不知道的javascript》  作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突 1 作用域链作用域有上下级的关系，会在当前作用域中寻找变量，如果找不到会沿着创建时作用域链一直往上找，直到找到全局作用域。 1234567891">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-作用域&amp;闭包">
+<meta property="og:url" content="/2019/07/28/js_bibao/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="js作用域&amp;amp;闭包作用域 作用域是负责收集并维护由所有声明的变量组成的一系列查询，并且实施一套严格的规则，确定当前执行的代码对这些变量的访问权限 – 《你不知道的javascript》  作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突 1 作用域链作用域有上下级的关系，会在当前作用域中寻找变量，如果找不到会沿着创建时作用域链一直往上找，直到找到全局作用域。 1234567891">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-28T11:14:19.379Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-作用域&amp;闭包">
+<meta name="twitter:description" content="js作用域&amp;amp;闭包作用域 作用域是负责收集并维护由所有声明的变量组成的一系列查询，并且实施一套严格的规则，确定当前执行的代码对这些变量的访问权限 – 《你不知道的javascript》  作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突 1 作用域链作用域有上下级的关系，会在当前作用域中寻找变量，如果找不到会沿着创建时作用域链一直往上找，直到找到全局作用域。 1234567891">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#js作用域-amp-闭包"><span class="toc-text">js作用域&amp;闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用域"><span class="toc-text">作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-作用域链"><span class="toc-text">1 作用域链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-作用域形成时机"><span class="toc-text">2 作用域形成时机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-作用域类别"><span class="toc-text">3 作用域类别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-提升"><span class="toc-text">4 提升</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_bibao" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-作用域&amp;闭包</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.07.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="js作用域-amp-闭包"><a href="#js作用域-amp-闭包" class="headerlink" title="js作用域&amp;闭包"></a>js作用域&amp;闭包</h1><h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><blockquote>
+<p>作用域是负责收集并维护由所有声明的变量组成的一系列查询，并且实施一套严格的规则，确定当前执行的代码对这些变量的访问权限 – 《你不知道的javascript》</p>
+</blockquote>
+<p><strong>作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突</strong></p>
+<h3 id="1-作用域链"><a href="#1-作用域链" class="headerlink" title="1 作用域链"></a>1 作用域链</h3><p>作用域有上下级的关系，会在当前作用域中寻找变量，如果找不到会沿着<code>创建时</code>作用域链一直往上找，直到找到全局作用域。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var a=1;</span><br><span class="line">function f1()&#123;</span><br><span class="line">   var b=2;   </span><br><span class="line">   function f2()&#123; </span><br><span class="line">     var c=3;</span><br><span class="line">     console.log(a,b,c);</span><br><span class="line">&#125;  </span><br><span class="line">f2();</span><br><span class="line">&#125;</span><br><span class="line">f1();//1 ,2 ,3</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-作用域形成时机"><a href="#2-作用域形成时机" class="headerlink" title="2 作用域形成时机"></a>2 作用域形成时机</h3><p>作用域是在一个函数创建时就已经形成的，而不是调用时.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function a () &#123;</span><br><span class="line">    let b = 2;</span><br><span class="line">    return function() &#123;</span><br><span class="line">        console.log(b)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">let b = 222</span><br><span class="line">a(); // 2 而不是222</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以上的示例调用a函数看似是在全局环境，但是其中的b却没有使用全局的b。而且去寻找定义时的b，没有找到则沿着创建时的作用域链往上找。结果是2</p>
+</blockquote>
+<h3 id="3-作用域类别"><a href="#3-作用域类别" class="headerlink" title="3 作用域类别"></a>3 作用域类别</h3><p><strong>作用域包含全局作用域、函数作用域、和es6中新增的块级作用域。</strong><br>在es6没有出来之前。我们避免变量污染全局的方法是使用函数作用域。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">最常见的是使用自执行函数来包裹模块，这样函数中的变量只能在局部作用域中生效</span><br><span class="line">(function() &#123;</span><br><span class="line">  // do something</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>而在es6中新增的let和const可以将变量绑定到所在的任意作用域中通常是{…}，为其声明的变量隐式的劫持了所在的块级作用域。 – 《你不知道的javascript》</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">	setTimeout(() =&gt; &#123;</span><br><span class="line">		console.log(i) // 10 10 ... 10</span><br><span class="line">	&#125;, 500)</span><br><span class="line">&#125;</span><br><span class="line">// es6之前 需要使用自执行函数来创建函数作用域来隔绝变量</span><br><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">    (function(i)&#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">		console.log(i) // 10 10 ... 10</span><br><span class="line">	&#125;, 500)</span><br><span class="line">    &#125;)(i)	</span><br><span class="line">&#125;</span><br><span class="line">// 而es6中直接使用let就可以实现隔绝变量的作用</span><br><span class="line">for (let i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">	setTimeout(() =&gt; &#123;</span><br><span class="line">		console.log(i) // 0 1 2 ... 9</span><br><span class="line">	&#125;, 500)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-提升"><a href="#4-提升" class="headerlink" title="4 提升"></a>4 提升</h3><p>代码被执行前会有声明提升的过程。只有声明本身会被提升，任何作用域都会进行提升操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	console.log(a);</span><br><span class="line">	var a = 2;	</span><br><span class="line">&#125;</span><br><span class="line">实际上被解析成如下：</span><br><span class="line">&#123;</span><br><span class="line">        var a;</span><br><span class="line">	console.log(a);</span><br><span class="line">	a = 2;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>let和const声明不会被提升，但是不代表这个作用域中不会进行提升操作。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    console.log(a);  //  ReferenceError</span><br><span class="line">    let a = 2;	</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line">**函数的提升是优先于变量的**</span><br></pre></td></tr></table></figure>
+
+<p>foo();  // 1 打印出来的是1 而不是2<br>var foo;<br>function foo () {console.log(1)}<br>foo = function() {console.log(2)}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### 5 this</span><br><span class="line">#### 1 &gt; 构造函数中this</span><br></pre></td></tr></table></figure>
+
+<p>function Kimi() {<br>    this.name = ‘kimi’<br>    console.log(this)  // ‘kimi’<br>}<br>new Kimi </p>
+<p>如何直接执行Kimi() this指向window</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#### 2 &gt; 函数作为对象的一个属性</span><br></pre></td></tr></table></figure>
+
+<p>let kimi = {<br>    name : ‘kimi’,<br>    say: function() {<br>        console.log(this.name) // ‘kimi’<br>    }<br>}<br>kimi.say()  // 这样调用打印的是‘kimi’</p>
+<p>如果不作为属性调用<br>let  a = kimi.say;<br>a(); // 这样调用打印的是window</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#### 3 &gt; 使用call和apply</span><br></pre></td></tr></table></figure>
+
+<p>let kimi = {<br>    name : ‘kimi’<br>}<br>let say = function() {<br>    console.log(this.name)  // ‘kimi’<br>}<br>say.call(kimi); </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#### 4 &gt; 全局</span><br><span class="line">全局中的this一直指向window</span><br></pre></td></tr></table></figure>
+
+<p>let name = ‘kimi’;<br>let say = function() {<br>    console.log(this);  // window<br>    console.log(this.name);  // ‘kimi’<br>}<br>say();</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**有以下情况：**</span><br></pre></td></tr></table></figure>
+
+<p>let kimi = {<br>    name : ‘kimi’,<br>    say: function() {<br>        function a () {<br>                    console.log(this.name)  // ‘undefined’<br>                }<br>                a();<br>    }<br>}<br>kimi.say();</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; 函数a虽然是在kimi.say内部定义的，但是它仍然是一个普通的函数，this仍然指向window。如果需要重新指向kimi则需要使用箭头函数或者用let that = this;保存引用</span><br><span class="line"></span><br><span class="line">#### 5 &gt; this的用途</span><br><span class="line">this可以动态的绑定执行的对象，起到复用代码的作用</span><br></pre></td></tr></table></figure>
+
+<p>jQuery.extend = jQuery.fn.extend = function() {<br>    target = this;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; jQuery.extend和jQuery.fn.extend都指向了同一个函数，但是当执行时，函数中的this是不一样的。</span><br><span class="line">执行jQuery.extend(…)时，this指向jQuery；执行jQuery.fn.extend(…)时，this指向jQuery.fn。</span><br><span class="line"></span><br><span class="line">### 6 闭包</span><br><span class="line">在一个函数内部定义的另一个函数，当内部函数在包裹他的函数之外被执行时，就会形成闭包。同时内部函数仍然可以访问到包裹函数中的局部变量与函数。</span><br><span class="line">**闭包的两个常见用途**</span><br><span class="line">1. 函数作为返回值</span><br></pre></td></tr></table></figure>
+
+<p>封装变量 避免全局中被修改 ，并且记录状态。状态不会销毁丢失<br>function isFirst() {<br>    var _list = [];<br>    return function(id) {<br>        if(_list.includes(id)) {<br>            return false<br>        }<br>        _list.push(id)<br>        return true;<br>    }<br>}<br>var first = isFirst()<br>first(10) // true<br>first(10) // false<br>first(20) // true</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 函数作为参数</span><br></pre></td></tr></table></figure>
+
+<p>function wait(message) {<br>    setTimeout(function timer() {<br>        console.log(message);<br>    }, 1000)<br>}<br>wait(‘hello’);<br>```</p>
+<blockquote>
+<p>timer  函数传递给setTimeout(),<code>timer就具有了涵盖wait()作用域的闭包，</code>因此保有对变量message的引用，等到1000回调执行后，wait的内部作用域不会消失</p>
+</blockquote>
+<p><strong>在定时器、事件监听器、Ajax请求、跨窗口通信、webworker、或者其他的异步或者同步的任务中，只要使用了回调函数，实际上就在使用闭包。</strong></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/07/26/js_cors/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
