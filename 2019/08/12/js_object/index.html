@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-js对象 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="对象和原型对象 若干属性的集合就是对象，一切引用类型都是对象，都是属性的集合  1234let arr = [1,2]arr.name = &amp;apos;kimi&amp;apos;;console.log(arr.length) // 2console.log(arr.name) // &amp;apos;kimi&amp;apos;  属性描述符12345678910let obj = &amp;#123;  a: 2&amp;#12">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-js对象">
+<meta property="og:url" content="/2019/08/12/js_object/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="对象和原型对象 若干属性的集合就是对象，一切引用类型都是对象，都是属性的集合  1234let arr = [1,2]arr.name = &amp;apos;kimi&amp;apos;;console.log(arr.length) // 2console.log(arr.name) // &amp;apos;kimi&amp;apos;  属性描述符12345678910let obj = &amp;#123;  a: 2&amp;#12">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-12T15:06:22.046Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-js对象">
+<meta name="twitter:description" content="对象和原型对象 若干属性的集合就是对象，一切引用类型都是对象，都是属性的集合  1234let arr = [1,2]arr.name = &amp;apos;kimi&amp;apos;;console.log(arr.length) // 2console.log(arr.name) // &amp;apos;kimi&amp;apos;  属性描述符12345678910let obj = &amp;#123;  a: 2&amp;#12">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#对象和原型"><span class="toc-text">对象和原型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性描述符"><span class="toc-text">属性描述符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-1-gt-writable"><span class="toc-text">&lt;1&gt; [[writable]]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-2-gt-configurable-默认值true"><span class="toc-text">&lt;2&gt; [[configurable]] 默认值true</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-3-gt-value-默认值undefined"><span class="toc-text">&lt;3&gt; [[value]] 默认值undefined</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-4-gt-enumerable-默认值true"><span class="toc-text">&lt;4&gt; [[enumerable]] 默认值true</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#访问描述符"><span class="toc-text">访问描述符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#get-set"><span class="toc-text">[[get]] [[set]]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不变性"><span class="toc-text">不变性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-1-gt-设置writable、configurable为false"><span class="toc-text">&lt;1&gt; 设置writable、configurable为false</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-2-gt-Object-preventExtensions-不可扩展"><span class="toc-text">&lt;2&gt; Object.preventExtensions()  不可扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-3-gt-Object-seal-密封"><span class="toc-text">&lt;3&gt; Object.seal()  密封</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt-4-gt-Object-freeze-冻结"><span class="toc-text">&lt;4&gt; Object.freeze()  冻结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在性"><span class="toc-text">存在性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hasOwnProperty-NaN"><span class="toc-text">hasOwnProperty()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new和object-create"><span class="toc-text">new和object.create</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_object" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-js对象</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.08.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="对象和原型"><a href="#对象和原型" class="headerlink" title="对象和原型"></a>对象和原型</h1><h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><blockquote>
+<p>若干属性的集合就是对象，一切引用类型都是对象，都是属性的集合</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let arr = [1,2]</span><br><span class="line">arr.name = &apos;kimi&apos;;</span><br><span class="line">console.log(arr.length) // 2</span><br><span class="line">console.log(arr.name) // &apos;kimi&apos;</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性描述符"><a href="#属性描述符" class="headerlink" title="属性描述符"></a>属性描述符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: 2</span><br><span class="line">&#125;;</span><br><span class="line">Object.getOwnPropertyDescriptor(obj, &apos;a&apos;);</span><br><span class="line">// &#123;</span><br><span class="line">//  value: 2,</span><br><span class="line">//  writable: true,</span><br><span class="line">//  enumerable: true,</span><br><span class="line">//  configurable: true</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-1-gt-writable"><a href="#lt-1-gt-writable" class="headerlink" title="&lt;1&gt; [[writable]]"></a>&lt;1&gt; [[writable]]</h3><p>表示是否能修改属性的值，默认值是true</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj, &apos;a&apos;, &#123;</span><br><span class="line">  value: 2,</span><br><span class="line">  writable: false, // 不可写</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: true,</span><br><span class="line">&#125;)</span><br><span class="line">obj.a = 3; // 严格模式下会报错，非严格模式下会忽略</span><br><span class="line">obj.a // 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-2-gt-configurable-默认值true"><a href="#lt-2-gt-configurable-默认值true" class="headerlink" title="&lt;2&gt; [[configurable]] 默认值true"></a>&lt;2&gt; [[configurable]] 默认值true</h3><p>是否可以通过defineProperty来配置对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj, &apos;a&apos;, &#123;</span><br><span class="line">  value: 2,</span><br><span class="line">  writable: true, </span><br><span class="line">  configurable: false, // 不可配置</span><br><span class="line">  enumerable: true,</span><br><span class="line">&#125;)</span><br><span class="line">obj.a = 3; // 仍然可以修改属性值</span><br><span class="line">obj.a // 3</span><br><span class="line"></span><br><span class="line">Object.defineProperty(obj, &apos;a&apos;, &#123;</span><br><span class="line">  value: 2,</span><br><span class="line">  writable: true, </span><br><span class="line">  configurable: true, // 不管什么模式都会报错</span><br><span class="line">  enumerable: true,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果使用Object.defineProperty创建新属性但是不填写配置，writable、configurable、enumerable默认都是false。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj, &apos;a&apos;, &#123;&#125;)</span><br><span class="line">Object.getOwnPropertyDescriptor(obj, &apos;a&apos;);</span><br><span class="line">// &#123;</span><br><span class="line">//  value: undefined,</span><br><span class="line">//  writable: false,</span><br><span class="line">//  enumerable: false,</span><br><span class="line">//  configurable: false</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果设置了configurable是false。仍然可以将writable的值从true设置为false,但是不可以从false设置为true。<br>如果设置了configurable是false，不可以使用delete删除属性</p>
+</blockquote>
+<h3 id="lt-3-gt-value-默认值undefined"><a href="#lt-3-gt-value-默认值undefined" class="headerlink" title="&lt;3&gt; [[value]] 默认值undefined"></a>&lt;3&gt; [[value]] 默认值undefined</h3><p>包含这个属性的数据值</p>
+<h3 id="lt-4-gt-enumerable-默认值true"><a href="#lt-4-gt-enumerable-默认值true" class="headerlink" title="&lt;4&gt; [[enumerable]] 默认值true"></a>&lt;4&gt; [[enumerable]] 默认值true</h3><p>是否可以for in、object.keys、 JSON.stringify递归出来</p>
+<h2 id="访问描述符"><a href="#访问描述符" class="headerlink" title="访问描述符"></a>访问描述符</h2><h3 id="get-set"><a href="#get-set" class="headerlink" title="[[get]] [[set]]"></a>[[get]] [[set]]</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj, &apos;a&apos;, &#123;</span><br><span class="line">  get: function() &#123;</span><br><span class="line">    return this._a;  </span><br><span class="line">  &#125;,</span><br><span class="line">  set: function(val) &#123;</span><br><span class="line">    this._a = val;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  get a() &#123;</span><br><span class="line">     return this._a;  </span><br><span class="line">  &#125;,</span><br><span class="line">  set a(val) &#123;</span><br><span class="line">    this._a = val</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以上两种都会在对象中创建一个不包含值的属性，自动调用get、set函数。如果设置了set、get则会忽略value和enumerable配置</p>
+</blockquote>
+<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><h3 id="lt-1-gt-设置writable、configurable为false"><a href="#lt-1-gt-设置writable、configurable为false" class="headerlink" title="&lt;1&gt; 设置writable、configurable为false"></a>&lt;1&gt; 设置writable、configurable为false</h3><p>设置writable、configurable为false就可以创建一个真正的常量属性，不可修改、重定义、删除</p>
+<h3 id="lt-2-gt-Object-preventExtensions-不可扩展"><a href="#lt-2-gt-Object-preventExtensions-不可扩展" class="headerlink" title="&lt;2&gt; Object.preventExtensions()  不可扩展"></a>&lt;2&gt; Object.preventExtensions()  不可扩展</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: 2</span><br><span class="line">&#125;;</span><br><span class="line">Object.preventExtensions(obj) ; // 不可以添加新属性，并且保留已有属性</span><br><span class="line">obj.b = 3 ;</span><br><span class="line">obj.b // undefined</span><br></pre></td></tr></table></figure>
+
+<h3 id="lt-3-gt-Object-seal-密封"><a href="#lt-3-gt-Object-seal-密封" class="headerlink" title="&lt;3&gt; Object.seal()  密封"></a>&lt;3&gt; Object.seal()  密封</h3><p>会在现有对象身上调用Object.preventExtensions，并把所有属性标记为configurable为false</p>
+<blockquote>
+<p>不能添加新属性，也不能重新配置或者删除现有属性。<code>可以</code>修改现有的值</p>
+</blockquote>
+<h3 id="lt-4-gt-Object-freeze-冻结"><a href="#lt-4-gt-Object-freeze-冻结" class="headerlink" title="&lt;4&gt; Object.freeze()  冻结"></a>&lt;4&gt; Object.freeze()  冻结</h3><p>会在现有对象身上调用Object.seal，并且把所有属性标记为writable为false</p>
+<blockquote>
+<p>不能添加新属性，也不能重新配置或者删除现有属性。<code>不可以</code>修改现有的值</p>
+</blockquote>
+<h2 id="存在性"><a href="#存在性" class="headerlink" title="存在性"></a>存在性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;</span><br><span class="line">  a: undefined</span><br><span class="line">&#125;</span><br><span class="line">obj.a // undefined</span><br><span class="line">obj.b // undefined</span><br><span class="line">都是undefined，如何来区分哪个为obj的属性呢？</span><br></pre></td></tr></table></figure>
+
+<h3 id="hasOwnProperty-NaN"><a href="#hasOwnProperty-NaN" class="headerlink" title="hasOwnProperty()"></a>hasOwnProperty()</h3><blockquote>
+<p>hasOwnProperty只会判断自身是否有属性。in 操作符会检查属性是否存在原型中。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 in [1,2]  // false 判断的是key 数组的key是下标 0,1</span><br></pre></td></tr></table></figure>
+
+<h2 id="new和object-create"><a href="#new和object-create" class="headerlink" title="new和object.create"></a>new和object.create</h2>
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/07/28/js_bibao/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
