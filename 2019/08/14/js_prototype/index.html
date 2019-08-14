@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-类型转换 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-类型转换">
+<meta property="og:url" content="/2019/08/14/js_prototype/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="/images/constructor.png">
+<meta property="og:updated_time" content="2019-08-14T14:49:39.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-类型转换">
+<meta name="twitter:description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+<meta name="twitter:image" content="/images/constructor.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型-prototype"><span class="toc-text">原型 prototype</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_prototype" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-类型转换</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.08.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式</p>
+<h2 id="原型-prototype"><a href="#原型-prototype" class="headerlink" title="原型 prototype"></a>原型 prototype</h2><p><img src="/images/constructor.png" alt="constructor.png"></p>
+<p><strong>每个函数都有一个prototype属性指向他的原型</strong>，这个prototype的属性值是一个对象，默认的只有一个叫做<code>constructor</code>的属性，指向这个函数本身。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Foo () &#123;&#125;</span><br><span class="line">let a = new Foo();</span><br><span class="line">a.constructor // 指向Foo，但是constructor属性是从prototype上继承来的。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">function Foo () &#123;&#125;</span><br><span class="line">Foo.prototype = &#123;&#125; // 创建一个新原型对象</span><br><span class="line">let a = new Foo();</span><br><span class="line">a.constructor === Foo // false</span><br><span class="line">a.constructor === Object // true  本身原型上没有了constructor 属性，则会沿着原型链查找到Object </span><br><span class="line">``` </span><br><span class="line">&gt; **因为每个对象都有一个隐藏的属性“__proto__”**，这个属性引用了创建这个对象的函数的prototype。即：fn.__proto__ === Fn.prototype。所以可以使用原型的方法</span><br><span class="line"></span><br><span class="line">![prototype.png](/images/prototype.png)</span><br><span class="line"></span><br><span class="line">&gt; **总结: 每个函数function都有一个prototype原型。每个对象都有一个__proto__隐式原型。**</span><br><span class="line"></span><br><span class="line">## 对象和函数关系</span><br><span class="line">对象都是函数创建出来的，那么函数是谁创建的呢。---**Function**</span><br><span class="line">![prototypePart.png](/images/prototypePart.png)</span><br><span class="line"></span><br><span class="line">再回顾下之前的总结</span><br><span class="line">&gt; **每个函数function都有一个prototype原型。每个对象都有一个__proto__隐式原型。**</span><br><span class="line"></span><br><span class="line">&gt; 对于function Foo来说。他是函数。所以他就有一个prototype指向Foo.prototype，他也可以是对象（函数也是一种对象）。那么他也有一个__proto__指向创建他的函数的原型 Function.prototype</span><br><span class="line"></span><br><span class="line">所以我们来看Object和Function的关系，就有种鸡生蛋、蛋生鸡的感觉</span><br><span class="line">![prototypeAll.png](/images/prototypeAll.png)</span><br><span class="line"></span><br><span class="line">function Function当做函数时有prototype指向Function.prototype。当对象时有一个__proto__指向创建他的函数的原型 ，那么谁创建的函数呢 答案肯定还是Function自己。**感觉是自己创建了自己**。而Function.prototype是一个对象。所以他有__proto__指向创建他的函数的原型。对象是function Object创建的</span><br><span class="line">所以Function.prototype.__proto__ === Object.prototype</span><br><span class="line"></span><br><span class="line">function Object当做函数时有prototype指向Object.prototype。当对象时有一个__proto__指向创建他的函数的原型，函数肯定是Function创建的。那么就有Object.__proto__ === Function.prototype。而Object.prototype对象的__proto__指向null。让原型链形成结束。</span><br><span class="line"></span><br><span class="line">正是因为这样，Object、Function之间形成了一个闭环</span><br><span class="line"></span><br><span class="line">## Instanceof</span><br><span class="line">**Instanceof的判断是：沿着A的__proto__这条线来找，同时沿着B的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。**</span><br><span class="line">所以以下判断都成立</span><br></pre></td></tr></table></figure>
+
+<p>Object instanceof Function // true<br>Function instanceof Object // true<br>// Function 当作对象<strong>proto</strong>指向创建它的Function的原型Function.prototype。<br>// 而Function.prototype是个对象，他的<strong>proto</strong>指向Object.prototype。判断为true<br>Function instanceof Function // true</p>
+<pre><code>&gt; instanceof表示的就是一种继承关系，或者原型链的结构
+**javascript中的继承是通过原型链来体现的。原型继承**
+**访问一个对象的属性时，先在基本属性中查找，如果没有，再沿着__proto__这条链向上找，这就是原型链。**
+
+</code></pre>
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/12/js_object/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
