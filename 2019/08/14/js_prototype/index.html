@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>javascript基础-类型转换 | SuperKimi</title>
+  <title>javascript基础-js原型 | SuperKimi</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,19 +15,22 @@
     <meta name="keywords" content="javascript,">
   
 
-  <meta name="description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+  <meta name="description" content="1 对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 2 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.const">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript基础-类型转换">
+<meta property="og:title" content="javascript基础-js原型">
 <meta property="og:url" content="/2019/08/14/js_prototype/index.html">
 <meta property="og:site_name" content="SuperKimi">
-<meta property="og:description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+<meta property="og:description" content="1 对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 2 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.const">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="/images/constructor.png">
-<meta property="og:updated_time" content="2019-08-14T14:49:39.010Z">
+<meta property="og:image" content="/images/prototype.png">
+<meta property="og:image" content="/images/prototypePart.png">
+<meta property="og:image" content="/images/prototypeAll.png">
+<meta property="og:updated_time" content="2019-08-14T15:00:05.132Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript基础-类型转换">
-<meta name="twitter:description" content="对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.construct">
+<meta name="twitter:title" content="javascript基础-js原型">
+<meta name="twitter:description" content="1 对象首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式 2 原型 prototype 每个函数都有一个prototype属性指向他的原型，这个prototype的属性值是一个对象，默认的只有一个叫做constructor的属性，指向这个函数本身。 123function Foo () &amp;#123;&amp;#125;let a = new Foo();a.const">
 <meta name="twitter:image" content="/images/constructor.png">
 
   
@@ -174,7 +177,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象"><span class="toc-text">对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型-prototype"><span class="toc-text">原型 prototype</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-对象"><span class="toc-text">1 对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-原型-prototype"><span class="toc-text">2 原型 prototype</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-对象和函数关系"><span class="toc-text">3 对象和函数关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Instanceof"><span class="toc-text">4 Instanceof</span></a></li></ol>
   </div>
 
 
@@ -182,7 +185,7 @@
 <div class="content content-post CENTER">
    <article id="post-js_prototype" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">javascript基础-类型转换</h1>
+    <h1 class="post-title">javascript基础-js原型</h1>
 
     <div class="article-meta">
       <span>
@@ -220,19 +223,35 @@
 
   <div class="article-content">
     
-      <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式</p>
-<h2 id="原型-prototype"><a href="#原型-prototype" class="headerlink" title="原型 prototype"></a>原型 prototype</h2><p><img src="/images/constructor.png" alt="constructor.png"></p>
+      <h2 id="1-对象"><a href="#1-对象" class="headerlink" title="1 对象"></a>1 对象</h2><p>首先明确一点，对象都是通过函数创建的。let obj = {a:1} 只是一种快捷方式</p>
+<h2 id="2-原型-prototype"><a href="#2-原型-prototype" class="headerlink" title="2 原型 prototype"></a>2 原型 prototype</h2><p><img src="/images/constructor.png" alt="constructor.png"></p>
 <p><strong>每个函数都有一个prototype属性指向他的原型</strong>，这个prototype的属性值是一个对象，默认的只有一个叫做<code>constructor</code>的属性，指向这个函数本身。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Foo () &#123;&#125;</span><br><span class="line">let a = new Foo();</span><br><span class="line">a.constructor // 指向Foo，但是constructor属性是从prototype上继承来的。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">function Foo () &#123;&#125;</span><br><span class="line">Foo.prototype = &#123;&#125; // 创建一个新原型对象</span><br><span class="line">let a = new Foo();</span><br><span class="line">a.constructor === Foo // false</span><br><span class="line">a.constructor === Object // true  本身原型上没有了constructor 属性，则会沿着原型链查找到Object </span><br><span class="line">``` </span><br><span class="line">&gt; **因为每个对象都有一个隐藏的属性“__proto__”**，这个属性引用了创建这个对象的函数的prototype。即：fn.__proto__ === Fn.prototype。所以可以使用原型的方法</span><br><span class="line"></span><br><span class="line">![prototype.png](/images/prototype.png)</span><br><span class="line"></span><br><span class="line">&gt; **总结: 每个函数function都有一个prototype原型。每个对象都有一个__proto__隐式原型。**</span><br><span class="line"></span><br><span class="line">## 对象和函数关系</span><br><span class="line">对象都是函数创建出来的，那么函数是谁创建的呢。---**Function**</span><br><span class="line">![prototypePart.png](/images/prototypePart.png)</span><br><span class="line"></span><br><span class="line">再回顾下之前的总结</span><br><span class="line">&gt; **每个函数function都有一个prototype原型。每个对象都有一个__proto__隐式原型。**</span><br><span class="line"></span><br><span class="line">&gt; 对于function Foo来说。他是函数。所以他就有一个prototype指向Foo.prototype，他也可以是对象（函数也是一种对象）。那么他也有一个__proto__指向创建他的函数的原型 Function.prototype</span><br><span class="line"></span><br><span class="line">所以我们来看Object和Function的关系，就有种鸡生蛋、蛋生鸡的感觉</span><br><span class="line">![prototypeAll.png](/images/prototypeAll.png)</span><br><span class="line"></span><br><span class="line">function Function当做函数时有prototype指向Function.prototype。当对象时有一个__proto__指向创建他的函数的原型 ，那么谁创建的函数呢 答案肯定还是Function自己。**感觉是自己创建了自己**。而Function.prototype是一个对象。所以他有__proto__指向创建他的函数的原型。对象是function Object创建的</span><br><span class="line">所以Function.prototype.__proto__ === Object.prototype</span><br><span class="line"></span><br><span class="line">function Object当做函数时有prototype指向Object.prototype。当对象时有一个__proto__指向创建他的函数的原型，函数肯定是Function创建的。那么就有Object.__proto__ === Function.prototype。而Object.prototype对象的__proto__指向null。让原型链形成结束。</span><br><span class="line"></span><br><span class="line">正是因为这样，Object、Function之间形成了一个闭环</span><br><span class="line"></span><br><span class="line">## Instanceof</span><br><span class="line">**Instanceof的判断是：沿着A的__proto__这条线来找，同时沿着B的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。**</span><br><span class="line">所以以下判断都成立</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Foo () &#123;&#125;</span><br><span class="line">Foo.prototype = &#123;&#125; // 创建一个新原型对象</span><br><span class="line">let a = new Foo();</span><br><span class="line">a.constructor === Foo // false</span><br><span class="line">a.constructor === Object // true  本身原型上没有了constructor 属性，则会沿着原型链查找到Object</span><br></pre></td></tr></table></figure>
 
-<p>Object instanceof Function // true<br>Function instanceof Object // true<br>// Function 当作对象<strong>proto</strong>指向创建它的Function的原型Function.prototype。<br>// 而Function.prototype是个对象，他的<strong>proto</strong>指向Object.prototype。判断为true<br>Function instanceof Function // true</p>
-<pre><code>&gt; instanceof表示的就是一种继承关系，或者原型链的结构
-**javascript中的继承是通过原型链来体现的。原型继承**
-**访问一个对象的属性时，先在基本属性中查找，如果没有，再沿着__proto__这条链向上找，这就是原型链。**
+<p><strong>因为每个对象都有一个隐藏的属性“<code>__proto__</code>”</strong>，这个属性引用了创建这个对象的函数的prototype。即：fn.<code>__proto__</code> === Fn.prototype。所以可以使用原型的方法</p>
+<p><img src="/images/prototype.png" alt="prototype.png"></p>
+<p><strong>总结: 每个函数function都有一个prototype原型。每个对象都有一个<code>__proto__</code>隐式原型。</strong></p>
+<h2 id="3-对象和函数关系"><a href="#3-对象和函数关系" class="headerlink" title="3 对象和函数关系"></a>3 对象和函数关系</h2><p>对象都是函数创建出来的，那么函数是谁创建的呢。—<strong>Function</strong><br><img src="/images/prototypePart.png" alt="prototypePart.png"></p>
+<p>再回顾下之前的总结</p>
+<blockquote>
+<p><strong>每个函数function都有一个prototype原型。每个对象都有一个<code>__proto__</code>隐式原型。</strong></p>
+</blockquote>
+<blockquote>
+<p>对于function Foo来说。他是函数。所以他就有一个prototype指向Foo.prototype，他也可以是对象（函数也是一种对象）。那么他也有一个<strong>proto</strong>指向创建他的函数的原型 Function.prototype</p>
+</blockquote>
+<p>所以我们来看Object和Function的关系，就有种鸡生蛋、蛋生鸡的感觉<br><img src="/images/prototypeAll.png" alt="prototypeAll.png"></p>
+<p>function Function当做函数时有prototype指向Function.prototype。当对象时有一个<code>__proto__</code>指向创建他的函数的原型 ，那么谁创建的函数呢 答案肯定还是Function自己。<strong>感觉是自己创建了自己</strong>。而Function.prototype是一个对象。所以他有<code>__proto__</code>指向创建他的函数的原型。对象是function Object创建的<br>所以Function.prototype.<code>__proto__</code> === Object.prototype</p>
+<p>function Object当做函数时有prototype指向Object.prototype。当对象时有一个<code>__proto__</code>指向创建他的函数的原型，函数肯定是Function创建的。那么就有Object.<code>__proto__</code> === Function.prototype。而Object.prototype对象的<code>__proto__</code>指向null。让原型链形成结束。</p>
+<p>正是因为这样，Object、Function之间形成了一个闭环.</p>
+<h2 id="4-Instanceof"><a href="#4-Instanceof" class="headerlink" title="4 Instanceof"></a>4 Instanceof</h2><p><strong>Instanceof的判断是：沿着A的<code>__proto__</code>这条线来找，同时沿着B的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。</strong><br>所以以下判断都成立</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object instanceof Function // true</span><br><span class="line">Function instanceof Object // true</span><br><span class="line">// Function 当作对象__proto__指向创建它的Function的原型Function.prototype。</span><br><span class="line">// 而Function.prototype是个对象，他的__proto__指向Object.prototype。判断为true</span><br><span class="line">Function instanceof Function // true</span><br></pre></td></tr></table></figure>
 
-</code></pre>
+<blockquote>
+<p>instanceof表示的就是一种继承关系，或者原型链的结构<br><strong>javascript中的继承是通过原型链来体现的。原型继承</strong><br><strong>访问一个对象的属性时，先在基本属性中查找，如果没有，再沿着<code>__proto__</code>这条链向上找，这就是原型链。</strong></p>
+</blockquote>
+
     
   </div>
 
