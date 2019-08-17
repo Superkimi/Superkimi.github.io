@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-js eventLoop | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-js eventLoop">
+<meta property="og:url" content="/2019/08/17/js_eventLoop/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="/images/eventLoop.png">
+<meta property="og:image" content="/images/process.nextTick.jpg">
+<meta property="og:image" content="/images/setImmediate.jpg">
+<meta property="og:updated_time" content="2019-08-17T14:47:17.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-js eventLoop">
+<meta name="twitter:description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
+<meta name="twitter:image" content="/images/eventLoop.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#单线程"><span class="toc-text">单线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步"><span class="toc-text">异步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#event-loop"><span class="toc-text">event-loop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#微任务和宏任务-（microtask和macrotask）"><span class="toc-text">微任务和宏任务 （microtask和macrotask）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#process-nextTick和setImmediate"><span class="toc-text">process.nextTick和setImmediate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#setImmediate和setTimeout"><span class="toc-text">setImmediate和setTimeout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际举例"><span class="toc-text">实际举例</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_eventLoop" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-js eventLoop</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.08.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h2><p>  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。</p>
+<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><p>  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念。任务也分为同步任务和异步任务两种</p>
+<h2 id="event-loop"><a href="#event-loop" class="headerlink" title="event-loop"></a>event-loop</h2><blockquote>
+<p>（1）所有同步任务都在主线程上执行，形成一个执行栈<br>（2）主线程之外，还存在一个”任务队列”（task queue）。只要异步任务有了运行结果，就在”任务队列”之中放置一个事件。<br>（3）一旦”执行栈”中的所有同步任务执行完毕，系统就会读取”任务队列”，看看里面有哪些事件。进入执行栈，开始执行。<br>（4）主线程不断重复上面的第三步。<br><strong>主线程从”任务队列”中读取事件，这个过程是循环不断的，所以整个的这种运行机制又称为Event Loop（事件循环）。</strong></p>
+</blockquote>
+<p><code>注意：</code>“任务队列”中的事件，除了IO设备的事件以外，还包括一些用户产生的事件（比如鼠标点击、页面滚动等等）。只要指定过回调函数，这些事件发生时就会进入”任务队列”，等待主线程读取。而异步任务一般都有回调函数。当主线程开始执行异步任务，就是执行对应的回调函数。如果遇到定时器会检查他的时间后执行。</p>
+<p><img src="/images/eventLoop.png" alt="eventLoop.png"></p>
+<h2 id="微任务和宏任务-（microtask和macrotask）"><a href="#微任务和宏任务-（microtask和macrotask）" class="headerlink" title="微任务和宏任务 （microtask和macrotask）"></a>微任务和宏任务 （microtask和macrotask）</h2><p>当执行以下方法函数，将把其<code>callback</code>推到宏任务队列中</p>
+<ol>
+<li><code>setTimeout</code>、<code>setInterval</code>和<code>setImmediate</code></li>
+<li><code>I/O操作</code>、<code>UI渲染</code>、<code>script脚本执行</code></li>
+<li><code>MessageChannel</code>(Vue的nexttick有使用)</li>
+</ol>
+<p>同理，不过是推到微任务队列</p>
+<ol>
+<li><code>Promise</code></li>
+<li><code>MutationObserver</code></li>
+<li><code>process.nextTick</code> (Node)</li>
+</ol>
+<p>在每次eventloop的时候会先执行微任务再执行宏任务。</p>
+<h2 id="process-nextTick和setImmediate"><a href="#process-nextTick和setImmediate" class="headerlink" title="process.nextTick和setImmediate"></a>process.nextTick和setImmediate</h2><p><code>process.nextTick</code>方法可以在当前”执行栈”的尾部—-下一次Event Loop（主线程读取”任务队列”）之前。也就是说，它指定的任务总是发生在所有异步任务之前</p>
+<p><img src="/images/process.nextTick.jpg" alt="process.nextTick.jpg"></p>
+<p><code>setImmediate</code>方法则是在当前”任务队列”的尾部添加事件，也就是说，它指定的任务总是在下一次Event Loop时执行，这与setTimeout(fn, 0)很像<br><img src="/images/setImmediate.jpg" alt="setImmediate.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">process.nextTick(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  process.nextTick(function B()&#123;console.log(2);&#125;); </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(3);</span><br><span class="line">&#125;, 0)</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>不论nextTick嵌套了多深。都会在下次EventLoop之前执行。所以如果递归调用nextTick时，node会报错。因为会卡死。而setImmediate嵌套多层也会在多个eventloop中执行。每写一个嵌套就多一次eventloop</p>
+</blockquote>
+<h2 id="setImmediate和setTimeout"><a href="#setImmediate和setTimeout" class="headerlink" title="setImmediate和setTimeout"></a>setImmediate和setTimeout</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function A() &#123;</span><br><span class="line">  console.log(1);</span><br><span class="line">  setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">  console.log(3);</span><br><span class="line">&#125;, 0);</span><br></pre></td></tr></table></figure>
+
+<p>如果只有setTimeout、setImmediate在主函数中时。<strong>执行顺序是随机的。</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function ()&#123;</span><br><span class="line">  setImmediate(function A() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">    setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  setTimeout(function timeout() &#123;</span><br><span class="line">    console.log(3);</span><br><span class="line">  &#125;, 0);</span><br><span class="line">&#125;);</span><br><span class="line">// 1</span><br><span class="line">// 3</span><br><span class="line">// 2</span><br></pre></td></tr></table></figure>
+
+<p>如果在setImmediate的递归中同时存在setTimeout和setImmediate。<strong>这时的setImmediate总是在setTimeout之前执行</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function A() &#123;</span><br><span class="line">    console.log(1);</span><br><span class="line">    setImmediate(function B()&#123;console.log(2);&#125;);</span><br><span class="line">&#125;);</span><br><span class="line">  </span><br><span class="line">setTimeout(function timeout() &#123;</span><br><span class="line">    console.log(3);</span><br><span class="line">&#125;, 0);</span><br><span class="line">process.nextTick(()=&gt;&#123;console.log(4)&#125;)</span><br><span class="line">// 4 3 1 2</span><br></pre></td></tr></table></figure>
+
+<p>还有种情况 如果主函数中写了其他的微任务（promise或者process.nextTick）。则总是setTimeout优先于setImmediate执行的。具体原因参考<a href="https://www.zhihu.com/question/23028843" target="_blank" rel="noopener">setTimeout和setImmediate区别</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>process.nextTick()，效率最高，消费资源小，但会阻塞CPU的后续调用；<br>setTimeout()，精确度不高，可能有延迟执行的情况发生，且因为动用了红黑树，所以消耗资源大；<br>setImmediate()，消耗的资源小，也不会造成阻塞，但效率也是最低的。</p>
+<h2 id="实际举例"><a href="#实际举例" class="headerlink" title="实际举例"></a>实际举例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">console.log(1);</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(2);</span><br><span class="line">    process.nextTick(() =&gt; &#123;</span><br><span class="line">        console.log(3);</span><br><span class="line">    &#125;)</span><br><span class="line">    new Promise((resolve) =&gt; &#123;</span><br><span class="line">        console.log(4);</span><br><span class="line">        resolve()</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        console.log(5)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">new Promise((resolve) =&gt; &#123;</span><br><span class="line">    console.log(6);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(() =&gt; &#123;</span><br><span class="line">    console.log(7);</span><br><span class="line">&#125;)</span><br><span class="line">process.nextTick(() =&gt; &#123;</span><br><span class="line">    console.log(8);</span><br><span class="line">&#125;)</span><br><span class="line">setImmediate(() =&gt; &#123;</span><br><span class="line">    console.log(9);</span><br><span class="line">&#125;)</span><br><span class="line">new Promise((resolve) =&gt; &#123;</span><br><span class="line">    console.log(10);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;).then(() =&gt; &#123;</span><br><span class="line">    console.log(11);</span><br><span class="line">&#125;)</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(12);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(13);</span><br><span class="line">    &#125;)</span><br><span class="line">    process.nextTick(() =&gt; &#123;</span><br><span class="line">        console.log(14);</span><br><span class="line">    &#125;)</span><br><span class="line">    new Promise((resolve) =&gt; &#123;</span><br><span class="line">        console.log(15);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        console.log(16);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">process.nextTick(() =&gt; &#123;</span><br><span class="line">    console.log(17)</span><br><span class="line">&#125;)</span><br><span class="line">// 1 6 10 8 17 7 11 2 4 12 15 3 14 5 16 9 13</span><br></pre></td></tr></table></figure>
+
+<p>执行栈执行：</p>
+<ol>
+<li>执行同步任务 <code>打印1</code></li>
+<li>遇到setTimeout放入宏任务队列中。</li>
+<li>遇到new promise时，new promise参数中的函数会立即执行。<code>打印6</code>，并且将状态置为resolve成功。这时候将then中的回调函数放入微任务队列中。</li>
+<li>遇到process.nextTick会放入下次eventloop之前。所有的异步任务之前</li>
+<li>遇到setImmediate会放入异步任务最后</li>
+<li>再遇到new promise同理，<code>打印10</code>，并且将then中回调放入微任务队列中</li>
+<li>遇到setTimeout放入宏任务队列中</li>
+<li>最后遇到process.nextTick会放入下次eventloop之前<br>执行栈结束</li>
+</ol>
+<p>第一次eventLoop</p>
+<ol start="9">
+<li><p>找到process.nextTick放入的任务执行。<code>执行8 17</code></p>
+</li>
+<li><p>取出微任务队列中的任务执行。<code>执行7 11</code></p>
+</li>
+<li><p>取出宏任务队列中的任务执行。先执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(2);</span><br><span class="line">    process.nextTick(() =&gt; &#123;</span><br><span class="line">        console.log(3);</span><br><span class="line">    &#125;)</span><br><span class="line">    new Promise((resolve) =&gt; &#123;</span><br><span class="line">        console.log(4);</span><br><span class="line">        resolve()</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        console.log(5)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>打印2</code> </p>
+</li>
+<li><p>将process.nextTick放入下次eventloop之前</p>
+</li>
+<li><p>new promise参数中的函数立即执行，<code>打印4</code>。将then中的回调放入微任务队列</p>
+</li>
+<li><p>再执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(12);</span><br><span class="line">    setImmediate(() =&gt; &#123;</span><br><span class="line">        console.log(13);</span><br><span class="line">    &#125;)</span><br><span class="line">    process.nextTick(() =&gt; &#123;</span><br><span class="line">        console.log(14);</span><br><span class="line">    &#125;)</span><br><span class="line">    new Promise((resolve) =&gt; &#123;</span><br><span class="line">        console.log(15);</span><br><span class="line">        resolve();</span><br><span class="line">    &#125;).then(() =&gt; &#123;</span><br><span class="line">        console.log(16);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>打印12</code></p>
+</li>
+<li><p>将setImmediate放入所有异步任务最后等待</p>
+</li>
+<li><p>将process.nextTick放入下次eventloop之前</p>
+</li>
+<li><p>new promise参数的函数立即执行，<code>打印15</code>。将then中的回调放入微任务队列<br>第一次eventLoop结束</p>
+</li>
+</ol>
+<p>第二次eventLoop</p>
+<ol start="20">
+<li>先执行process.nextTick的任务 。<code>打印3 14</code></li>
+<li>发现微任务队列中还有上一轮加入的任务。<code>打印5 16</code></li>
+<li>所以异步任务队列中没有任务了。最后执行setImmediate任务 <code>打印 9 13</code></li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/14/js_prototype/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/08/17/js_observer/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
