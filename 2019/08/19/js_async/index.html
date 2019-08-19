@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript异步系列（1）-发展史 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,">
+  
+
+  <meta name="description" content="ajax最早为了实现局部请求无刷新，有了ajax的概念。在原生js是时代，请求数据都需要自己手写一个ajax。现在还有很多面试题会让手写一个ajax 123456789101112131415161718192021222324252627282930313233343536// 先实例化一个XMLHttpRequest对象const xhr = new XMLHttpRequest()// xh">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript异步系列（1）-发展史">
+<meta property="og:url" content="/2019/08/19/js_async/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="ajax最早为了实现局部请求无刷新，有了ajax的概念。在原生js是时代，请求数据都需要自己手写一个ajax。现在还有很多面试题会让手写一个ajax 123456789101112131415161718192021222324252627282930313233343536// 先实例化一个XMLHttpRequest对象const xhr = new XMLHttpRequest()// xh">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-19T15:13:56.244Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript异步系列（1）-发展史">
+<meta name="twitter:description" content="ajax最早为了实现局部请求无刷新，有了ajax的概念。在原生js是时代，请求数据都需要自己手写一个ajax。现在还有很多面试题会让手写一个ajax 123456789101112131415161718192021222324252627282930313233343536// 先实例化一个XMLHttpRequest对象const xhr = new XMLHttpRequest()// xh">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ajax"><span class="toc-text">ajax</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jquery"><span class="toc-text">jquery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jquery1-5之后"><span class="toc-text">jquery1.5之后</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#promise前身"><span class="toc-text">promise前身</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#promise"><span class="toc-text">promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#generator"><span class="toc-text">generator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async-await-–终极方案"><span class="toc-text">async await –终极方案</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_async" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript异步系列（1）-发展史</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.08.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h2><p>最早为了实现局部请求无刷新，有了ajax的概念。在原生js是时代，请求数据都需要自己手写一个ajax。现在还有很多面试题会让手写一个ajax</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">// 先实例化一个XMLHttpRequest对象</span><br><span class="line">const xhr = new XMLHttpRequest()</span><br><span class="line"></span><br><span class="line">// xhr 具有一个 open 方法，相当于填写配置先初始化。这时候没有发出请求</span><br><span class="line">// method： 请求方式 —— get / post</span><br><span class="line">// url：请求的地址</span><br><span class="line">// async：是否异步请求，默认为 true（异步）</span><br><span class="line">xhr.open(method, url, async)</span><br><span class="line"></span><br><span class="line">// send 方法发送请求，并接受一个可选参数</span><br><span class="line">// 当请求方式为 post 时，可以将请求体的参数传入</span><br><span class="line">// 当请求方式为 get 时，可以不传或传入 null</span><br><span class="line">xhr.send(data)</span><br><span class="line"></span><br><span class="line">// xhr上有一个readyStatus值。他会随着请求的阶段不同而变化：</span><br><span class="line">// xhr.readyStatus==0 尚未调用 open 方法</span><br><span class="line">// xhr.readyStatus==1 已调用 open 但还未发送请求（未调用 send）</span><br><span class="line">// xhr.readyStatus==2 已发送请求（已调用 send）</span><br><span class="line">// xhr.readyStatus==3 已接收到请求返回的数据</span><br><span class="line">// xhr.readyStatus==4 请求已完成</span><br><span class="line"></span><br><span class="line">// 当readyStatus变化时都会执行onreadystatechange 回调。</span><br><span class="line">// responseText： 请求返回的数据内容</span><br><span class="line">// status： 响应的HTTP状态，如 200 304 404 等</span><br><span class="line">xhr.onreadystatechange = () =&gt; &#123;</span><br><span class="line">    if (xhr.readyStatus === 4) &#123;</span><br><span class="line">        if (xhr.status &gt;= 200 &amp;&amp; </span><br><span class="line">            xhr.status &lt; 300 || </span><br><span class="line">            xhr.status == 304) &#123;</span><br><span class="line">            console.log(&apos;请求成功&apos;, xhr.responseText)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 设置超时时间为1000毫秒</span><br><span class="line">xhr.timeout = 1000</span><br></pre></td></tr></table></figure>
+
+<h2 id="jquery"><a href="#jquery" class="headerlink" title="jquery"></a>jquery</h2><p>后来在jquery盛行的时代。将ajax封装成了一个函数。可以直接调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;  </span><br><span class="line">  type : &quot;POST&quot;,</span><br><span class="line">  url:&apos;http://aaaa.com&apos;,</span><br><span class="line">  async：true，</span><br><span class="line">  dataType：&apos;json&apos;,</span><br><span class="line">  data:&#123;a:&apos;aa&apos;&#125;,</span><br><span class="line">  success :function(msg)&#123;</span><br><span class="line">      //请求成功函数</span><br><span class="line">  &#125;,</span><br><span class="line">  error:function(err)&#123;</span><br><span class="line">      //请求失败函数</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="jquery1-5之后"><a href="#jquery1-5之后" class="headerlink" title="jquery1.5之后"></a>jquery1.5之后</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var ajax = $.ajax(&apos;data.json&apos;)</span><br><span class="line">ajax.done(function () &#123;</span><br><span class="line">        console.log(&apos;success 1&apos;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .fail(function () &#123;</span><br><span class="line">        console.log(&apos;error&apos;)</span><br><span class="line">    &#125;)</span><br><span class="line">    .done(function () &#123;</span><br><span class="line">         console.log(&apos;success 2&apos;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">console.log(ajax) // 返回一个 deferred 对象</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>区别:<br>之前返回的是一个XHR对象，这个对象不可能有done或者fail的方法的<br>1.5开始返回一个deferred对象，这个对象就带有done和fail的方法，并且是等着请求返回之后再去调用</p>
+</blockquote>
+<h2 id="promise前身"><a href="#promise前身" class="headerlink" title="promise前身"></a>promise前身</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 改造前</span><br><span class="line">var wait = function() &#123;</span><br><span class="line">	var task = function () &#123;</span><br><span class="line">		console.log(&apos;ok&apos;)</span><br><span class="line">	&#125;</span><br><span class="line">	setTimeout(task, 2000)</span><br><span class="line">&#125;</span><br><span class="line">wait()</span><br><span class="line">// 改造后	</span><br><span class="line">function waitHandle() &#123;</span><br><span class="line">	var dtd = $.Deferred()	</span><br><span class="line">	var wait = function(dtd) &#123;</span><br><span class="line">        var task = function() &#123;</span><br><span class="line">		    console.log(&apos;ok&apos;);</span><br><span class="line">		    dtd.resolve()</span><br><span class="line">		    // dtd.reject() </span><br><span class="line">	    &#125;</span><br><span class="line">	    setTimeout(task, 2000)</span><br><span class="line">		return dtd.promise() // 返回promise对象，使用时不可以修改状态。promise的前身</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return wait(dtd);</span><br><span class="line">&#125;	</span><br><span class="line">waitHandle().then();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1.5改造之后最大的好处就是可以通过then的方法来链式调用。不再会有回调地狱。而且状态一旦改变，也不能再变成其他状态了。和之后的promise一样。</p>
+</blockquote>
+<h2 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h2><p>es6中将之前社区中的方案正式纳入标准，制定了promise/A+规范。也就可以直接的使用promise</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">const getJSON = function(url) &#123;</span><br><span class="line">  const promise = new Promise(function(resolve, reject)&#123;</span><br><span class="line">    const handler = function() &#123;</span><br><span class="line">      if (this.readyState !== 4) &#123;</span><br><span class="line">        return;</span><br><span class="line">      &#125;</span><br><span class="line">      if (this.status === 200) &#123;</span><br><span class="line">        resolve(this.response);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        reject(new Error(this.statusText));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    const client = new XMLHttpRequest();</span><br><span class="line">    client.open(&quot;GET&quot;, url);</span><br><span class="line">    client.onreadystatechange = handler;</span><br><span class="line">    client.responseType = &quot;json&quot;;</span><br><span class="line">    client.setRequestHeader(&quot;Accept&quot;, &quot;application/json&quot;);</span><br><span class="line">    client.send();</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return promise;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">getJSON(&quot;/posts.json&quot;).then(function(json) &#123;</span><br><span class="line">  console.log(&apos;Contents: &apos; + json);</span><br><span class="line">&#125;, function(error) &#123;</span><br><span class="line">  console.error(&apos;出错了&apos;, error);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="generator"><a href="#generator" class="headerlink" title="generator"></a>generator</h2><blockquote>
+<p>promise的出现只是回调函数的改进，使用then方法以后，异步任务的两段执行看得更清楚了，会造成代码冗余。一堆的then。如下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var readFile = require(&apos;fs-readfile-promise&apos;);</span><br><span class="line"></span><br><span class="line">readFile(fileA)</span><br><span class="line">.then(function (data) &#123;</span><br><span class="line">  console.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.then(function () &#123;</span><br><span class="line">  return readFile(fileB);</span><br><span class="line">&#125;)</span><br><span class="line">.then(function (data) &#123;</span><br><span class="line">  console.log(data.toString());</span><br><span class="line">&#125;)</span><br><span class="line">.catch(function (err) &#123;</span><br><span class="line">  console.log(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>于是有了更好的解决方案—<code>generator</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var fetch = require(&apos;node-fetch&apos;);</span><br><span class="line"></span><br><span class="line">function* gen()&#123;</span><br><span class="line">  var url = &apos;https://api.github.com/users/github&apos;;</span><br><span class="line">  var result = yield fetch(url);</span><br><span class="line">  console.log(result.bio);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var g = gen();</span><br><span class="line">var result = g.next();</span><br><span class="line"></span><br><span class="line">result.value.then(function(data)&#123;</span><br><span class="line">  return data.json();</span><br><span class="line">&#125;).then(function(data)&#123;</span><br><span class="line">  g.next(data);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Generator 函数可以暂停执行和恢复执行，这是它能封装异步任务的根本原因。虽然 Generator 函数将异步操作表示得很简洁，但是流程管理却不方便，需要执行器`控制他什么时候执行第一步，什么时候执行第二步。并且传递参数。</p>
+</blockquote>
+<p>于是有了<code>co</code>这种流程管理库。</p>
+<p>简单的流程管理如下。会一直执行下去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function* gen() &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var g = gen();</span><br><span class="line">var res = g.next();</span><br><span class="line"></span><br><span class="line">while(!res.done)&#123;</span><br><span class="line">  console.log(res.value);</span><br><span class="line">  res = g.next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="async-await-–终极方案"><a href="#async-await-–终极方案" class="headerlink" title="async await –终极方案"></a>async await –终极方案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">async function getStockPriceByName(name) &#123;</span><br><span class="line">  const symbol = await getStockSymbol(name);</span><br><span class="line">  const stockPrice = await getStockPrice(symbol);</span><br><span class="line">  return stockPrice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getStockPriceByName(&apos;goog&apos;).then(function (result) &#123;</span><br><span class="line">  console.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>好处</strong><br>（1）内置执行器。<br>Generator 函数的执行必须靠执行器，所以才有了co模块，而async函数自带执行器。也就是说，async函数的执行，与普通函数一模一样，只要一行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getStockPriceByName();</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码调用了getStockPriceByName函数，然后它就会自动执行，输出最后结果。这完全不像 Generator 函数，需要调用next方法，或者用co模块，才能真正执行，得到最后结果。</p>
+<p>（2）更好的语义。<br>async和await，比起星号和yield，语义更清楚了。async表示函数里有异步操作，await表示紧跟在后面的表达式需要等待结果。</p>
+<p>（3）更广的适用性。<br>co模块约定，yield命令后面只能是 Thunk 函数或 Promise 对象，而async函数的await命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 resolved 的 Promise 对象）。</p>
+<p>（4）返回值是 Promise。<br>async函数的返回值是 Promise 对象，这比 Generator 函数的返回值是 Iterator 对象方便多了。你可以用then方法指定下一步的操作。</p>
+<p>进一步说，async函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而await命令就是内部then命令的语法糖。</p>
+<blockquote>
+<p>在nodejs中已经使用async 、 await做为异步操作的解决方案</p>
+</blockquote>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/17/js_observer/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
