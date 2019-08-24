@@ -15,18 +15,18 @@
     <meta name="keywords" content="javascript,">
   
 
-  <meta name="description" content="上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用  1. 返回一个新的p">
+  <meta name="description" content="promise then上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript异步系列（3）-promise中">
 <meta property="og:url" content="/2019/08/24/js_promise2/index.html">
 <meta property="og:site_name" content="SuperKimi">
-<meta property="og:description" content="上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用  1. 返回一个新的p">
+<meta property="og:description" content="promise then上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-08-24T08:43:07.512Z">
+<meta property="og:updated_time" content="2019-08-24T08:44:56.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript异步系列（3）-promise中">
-<meta name="twitter:description" content="上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用  1. 返回一个新的p">
+<meta name="twitter:description" content="promise then上一节promise上已经根据promise/A+规范写出了基本的Promise类的基本框架。 那么在promise/A+规范中还有几个关于then中的规范没有实现。  如果返回一个普通值，会走下一个then的成功回调 如果返回一个promise，会将他执行完的状态给下一个then 如果抛出错误，会走下一个then的reject方法 返回一个新的promise。实现链式调用">
 
   
 
@@ -172,7 +172,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-返回一个新的promise。实现链式调用"><span class="toc-text">1. 返回一个新的promise。实现链式调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-如果then中执行后返回的还是一个promise"><span class="toc-text">2. 如果then中执行后返回的还是一个promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-返回值为promise"><span class="toc-text">3. 返回值为promise</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-resolve-和-Promise-reject"><span class="toc-text">Promise.resolve() 和 Promise.reject()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）参数是一个-Promise-实例"><span class="toc-text">（1）参数是一个 Promise 实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）参数是一个thenable对象"><span class="toc-text">（2）参数是一个thenable对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）参数不是具有then方法的对象，或根本就不是对象"><span class="toc-text">（3）参数不是具有then方法的对象，或根本就不是对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）不带有任何参数"><span class="toc-text">（4）不带有任何参数</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#promise-then"><span class="toc-text">promise then</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-返回一个新的promise。实现链式调用"><span class="toc-text">1. 返回一个新的promise。实现链式调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-如果then中执行后返回的还是一个promise"><span class="toc-text">2. 如果then中执行后返回的还是一个promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-返回值为promise"><span class="toc-text">3. 返回值为promise</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise-resolve-和-Promise-reject"><span class="toc-text">Promise.resolve() 和 Promise.reject()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）参数是一个-Promise-实例"><span class="toc-text">（1）参数是一个 Promise 实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）参数是一个thenable对象"><span class="toc-text">（2）参数是一个thenable对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（3）参数不是具有then方法的对象，或根本就不是对象"><span class="toc-text">（3）参数不是具有then方法的对象，或根本就不是对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（4）不带有任何参数"><span class="toc-text">（4）不带有任何参数</span></a></li></ol></li></ol>
   </div>
 
 
@@ -218,7 +218,7 @@
 
   <div class="article-content">
     
-      <p>上一节<a href="https://www.jianshu.com/p/cdad8b501b63" target="_blank" rel="noopener">promise上</a>已经根据promise/A+规范写出了基本的Promise类的基本框架。</p>
+      <h2 id="promise-then"><a href="#promise-then" class="headerlink" title="promise then"></a>promise then</h2><p>上一节<a href="https://www.jianshu.com/p/cdad8b501b63" target="_blank" rel="noopener">promise上</a>已经根据promise/A+规范写出了基本的Promise类的基本框架。</p>
 <p>那么在promise/A+规范中还有几个关于then中的规范没有实现。</p>
 <ol>
 <li>如果返回一个普通值，会走下一个then的成功回调</li>
