@@ -7,18 +7,18 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>javascript基础-js eventLoop | SuperKimi</title>
+  <title>js eventLoop | SuperKimi</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="javascript,">
+    <meta name="keywords" content="js异步系列,javascript基础,">
   
 
   <meta name="description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
-<meta name="keywords" content="javascript">
+<meta name="keywords" content="js异步系列,javascript基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javascript基础-js eventLoop">
+<meta property="og:title" content="js eventLoop">
 <meta property="og:url" content="/2019/08/17/js_eventLoop/index.html">
 <meta property="og:site_name" content="SuperKimi">
 <meta property="og:description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
@@ -26,9 +26,9 @@
 <meta property="og:image" content="/images/eventLoop.png">
 <meta property="og:image" content="/images/process.nextTick.jpg">
 <meta property="og:image" content="/images/setImmediate.jpg">
-<meta property="og:updated_time" content="2019-08-17T14:47:17.962Z">
+<meta property="og:updated_time" content="2019-08-25T10:28:04.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javascript基础-js eventLoop">
+<meta name="twitter:title" content="js eventLoop">
 <meta name="twitter:description" content="单线程  js是单线程是众所周知的事情，那么为什么js会被设计成单线程呢。因为如果js为多线程的话。如果一个线程在读取一个dom的信息。另一个线程是要把这个dom删除。这样就会造成混乱。所以js被设计成单线程的。 异步  那么由于js是单线程的。如果遇到ajax请求或者io操作的话。这个线程如果一直在等着请求返回。有可能这个返回时间也特别长。那么这个资源就一直消耗在这等待。所以js有了异步的的概念">
 <meta name="twitter:image" content="/images/eventLoop.png">
 
@@ -184,7 +184,7 @@
 <div class="content content-post CENTER">
    <article id="post-js_eventLoop" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">javascript基础-js eventLoop</h1>
+    <h1 class="post-title">js eventLoop</h1>
 
     <div class="article-meta">
       <span>
