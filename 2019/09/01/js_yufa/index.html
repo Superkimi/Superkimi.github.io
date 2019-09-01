@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>javascript基础-语句 | SuperKimi</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript基础,">
+  
+
+  <meta name="description" content="1. js语句所有的js语句其实都会返回结果  在调试工具中执行 var a = 12 会返回undefined ，表示声明变量会返回undefined  2. 表达式的副作用函数执行的时候，有可能会改变全局变量。 12345function boo() &amp;#123;	a = a + 1&amp;#125;var a =  1;boo(); // a被改变  a++表示先赋值再++。 就是用括号扩起来也没">
+<meta name="keywords" content="javascript基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础-语句">
+<meta property="og:url" content="/2019/09/01/js_yufa/index.html">
+<meta property="og:site_name" content="SuperKimi">
+<meta property="og:description" content="1. js语句所有的js语句其实都会返回结果  在调试工具中执行 var a = 12 会返回undefined ，表示声明变量会返回undefined  2. 表达式的副作用函数执行的时候，有可能会改变全局变量。 12345function boo() &amp;#123;	a = a + 1&amp;#125;var a =  1;boo(); // a被改变  a++表示先赋值再++。 就是用括号扩起来也没">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-01T09:17:30.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础-语句">
+<meta name="twitter:description" content="1. js语句所有的js语句其实都会返回结果  在调试工具中执行 var a = 12 会返回undefined ，表示声明变量会返回undefined  2. 表达式的副作用函数执行的时候，有可能会改变全局变量。 12345function boo() &amp;#123;	a = a + 1&amp;#125;var a =  1;boo(); // a被改变  a++表示先赋值再++。 就是用括号扩起来也没">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016sfsf1fba3xxxx8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">主页</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">主页</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="ROUND_RECT"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-js语句"><span class="toc-text">1. js语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-表达式的副作用"><span class="toc-text">2. 表达式的副作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-大括号"><span class="toc-text">3. 大括号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-else-if"><span class="toc-text">4. else if</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-switch"><span class="toc-text">5. switch</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-js_yufa" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">javascript基础-语句</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.09.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Super kimi</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="1-js语句"><a href="#1-js语句" class="headerlink" title="1. js语句"></a>1. js语句</h2><p>所有的js语句其实都会返回结果</p>
+<blockquote>
+<p>在调试工具中执行 var a = 12 会返回undefined ，表示声明变量会返回undefined</p>
+</blockquote>
+<h2 id="2-表达式的副作用"><a href="#2-表达式的副作用" class="headerlink" title="2. 表达式的副作用"></a>2. 表达式的副作用</h2><p>函数执行的时候，有可能会改变全局变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function boo() &#123;</span><br><span class="line">	a = a + 1</span><br><span class="line">&#125;</span><br><span class="line">var a =  1;</span><br><span class="line">boo(); // a被改变</span><br></pre></td></tr></table></figure>
+
+<p>a++表示先赋值再++。 就是用括号扩起来也没有用。想让他++完之后再赋值。需要使用逗号表达式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a = 42;</span><br><span class="line">a = a++; // 42</span><br><span class="line">a = (a++) //42</span><br><span class="line">a = (a++, a) // 43</span><br></pre></td></tr></table></figure>
+
+<p>在连续赋值时要注意，如果b没有声明则会创建一个全局变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var a = b =42 ; 会创建一个全局变量 严格模式报错</span><br></pre></td></tr></table></figure>
+
+<p>也可以利用赋值语句的副作用。先执行再赋值。接着判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">可以利用赋值语句</span><br><span class="line">function vowels(str) &#123;</span><br><span class="line">	var matches;	</span><br><span class="line">	if(str &amp;&amp; (matches = str.match(/[aeiou]/g))) &#123;</span><br><span class="line">		// 先判断 如果成功将值赋值给matches 失败返回null不进判断</span><br><span class="line">		return matches;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">vowels(&quot;hello world&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-大括号"><a href="#3-大括号" class="headerlink" title="3. 大括号"></a>3. 大括号</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var a = &#123;</span><br><span class="line">	foo: bar()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>去掉var a =不会报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	foo: bar()</span><br><span class="line">&#125;</span><br><span class="line">// 因为&#123;&#125;只是I个普通的代码块。</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>而foo:bar()不会报错的原因是因为foo:被当成了标签, js的标签语法用来break和continue</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">	bar: &#123;</span><br><span class="line">		console.log(&apos;hello&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">	break bar;</span><br><span class="line">	console.log(666)</span><br><span class="line">&#125;</span><br><span class="line">foo() // hello</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-else-if"><a href="#4-else-if" class="headerlink" title="4. else if"></a>4. else if</h2><p>js中本身是没有else if的 是因为if else后面可以省略大括号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if () &#123;</span><br><span class="line">	//</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	if () &#123;</span><br><span class="line">		// </span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以简写为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if() &#123;</span><br><span class="line">&#125;</span><br><span class="line">else if () &#123;</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-switch"><a href="#5-switch" class="headerlink" title="5. switch"></a>5. switch</h2><p>switch中是===判断 如果想用==</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var a = &apos;42&apos;;</span><br><span class="line">switch(true) &#123;</span><br><span class="line">	case a == 10;</span><br><span class="line">		console.log(1);</span><br><span class="line">		break;</span><br><span class="line">	case a == 42;</span><br><span class="line">		console.log(2);</span><br><span class="line">		break;</span><br><span class="line">	default;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持superkimi</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/08/25/js_promise3/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="ROUND_RECT"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
